@@ -1,11 +1,22 @@
 import { Link, useLocation } from 'react-router-dom';
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const Navbar = () => {
 
+
+    const { user, logOut } = useContext(AuthContext);
     const location = useLocation();
     const active = location.pathname.split('/')[1];
+    const handleLogout = () => {
+        logOut()
+            .then(result => {
+                toast('Logout successfully!')
+            })
+            .catch(error => toast(error))
+    }
 
     const navbar = <>
         <li className='hover:underline '>
@@ -29,25 +40,35 @@ const Navbar = () => {
         <li className='hover:underline'>
             {
                 active == 'contact' ?
-                    <Link to='/contact' className='hover:bg-green-100 bg-green-100 text-green-500'>Conatct</Link> : <Link to='/contact' className='hover:bg-green-100 bg-green-100'>Conatct</Link>
+                    <Link to='/contact' className='hover:bg-green-100 bg-green-100 text-green-500'>Contact</Link> : <Link to='/contact' className='hover:bg-green-100 bg-green-100'>Contact</Link>
             }
         </li>
-        <li className='hover:underline'>
-            {
-                active == 'login' ?
-                    <Link to='/login' className='hover:bg-green-100 bg-green-100 text-green-500'>Login</Link> : <Link to='/login' className='hover:bg-green-100 bg-green-100'>Login</Link>
-            }
-        </li>
-        <li className='hover:underline'> {
-            active == 'register' ?
-                <Link to='/chat' className='hover:bg-green-100 bg-green-100 text-green-500'>Register</Link> : <Link to='/register' className='hover:bg-green-100 bg-green-100'>Register</Link>
+        {
+            !user ? <>
+                <li className='hover:underline'>
+                    {
+                        active == 'login' ?
+                            <Link to='/login' className='hover:bg-green-100 bg-green-100 text-green-500'>Login</Link> : <Link to='/login' className='hover:bg-green-100 bg-green-100'>Login</Link>
+                    }
+                </li>
+                <li className='hover:underline'> {
+                    active == 'register' ?
+                        <Link to='/chat' className='hover:bg-green-100 bg-green-100 text-green-500'>Register</Link> : <Link to='/register' className='hover:bg-green-100 bg-green-100'>Register</Link>
+                }
+                </li>
+            </> :
+                <li className='hover:underline'> {
+                    <p onClick={handleLogout} className='hover:bg-green-100 bg-green-100 '>Logout</p>
+                }
+                </li>
         }
-        </li>
-        <li><div className="avatar bg-green-100 hover:bg-green-100">
-            <div className="w-10 rounded-full ring ring-success ring-offset-base-100 ring-offset-2 ">
-                <img src="https://i.pngimg.me/thumb/f/720/comvecteezy420553.jpge" />
-            </div>
-        </div></li>
+        {
+            user && <li><div className="avatar bg-green-100 hover:bg-green-100">
+                <div className="w-10 rounded-full ring ring-success ring-offset-base-100 ring-offset-2 ">
+                    <img src={user.photoURL} />
+                </div>
+            </div></li>
+        }
     </>
 
     return (
