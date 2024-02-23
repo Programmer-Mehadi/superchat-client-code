@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Shared/Loading/Loading';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
@@ -133,6 +133,9 @@ const Register = () => {
                         }
                         <div className="form-control mt-6">
                             <button type='submit' className="btn bg-green-400 text-slate-700 hover:bg-green-500 hover:text-white transition ease-in border-2">Register</button>
+                        </div>
+                        <div className="form-control mt-6">
+                            <span className='inline'>Have an account?<Link to='/login' className='text-green-700 underline inline ml-2'>Login</Link> </span>
                         </div>
                     </form>
                 </div>

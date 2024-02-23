@@ -5,7 +5,7 @@ import Navbar from '../components/Shared/Navbar/Navbar';
 
 const Layout = () => {
     return (
-        <div className='flex flex-col justify-between min-h-[100vh]'>
+        <div className='flex flex-col justify-between'>
             <Navbar></Navbar>
             <Outlet></Outlet>
             <Footer></Footer>
